@@ -5,7 +5,7 @@ import antlr4.LogFilterParser;
 
 import java.util.function.Predicate;
 
-public class LogFilterVisitor extends LogFilterBaseVisitor<Predicate<String[]>> {
+public class FilterVisitor extends LogFilterBaseVisitor<Predicate<String[]>> {
     @Override
     public Predicate<String[]> visitOrExpr(LogFilterParser.OrExprContext ctx) {
         var predicate = visit(ctx.andExpr(0));
@@ -48,7 +48,7 @@ public class LogFilterVisitor extends LogFilterBaseVisitor<Predicate<String[]>> 
             var value = ctx.value().getText().replaceAll("'", "");
 
             return strArr -> {
-                var columnIndex = Integer.parseInt(column.substring(7, column.length() - 1));
+                var columnIndex = Integer.parseInt(column.substring(7, column.length() - 1)) - 1;
                 var columnValue = strArr[columnIndex].replaceAll("\"", "");
                 switch (compOp) {
                     case "=":
@@ -66,5 +66,3 @@ public class LogFilterVisitor extends LogFilterBaseVisitor<Predicate<String[]>> 
         }
     }
 }
-
-

@@ -1,5 +1,6 @@
 grammar LogFilter;
 
+
 filter: expression;
 
 expression: orExpr;
